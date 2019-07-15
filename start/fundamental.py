@@ -67,4 +67,20 @@ def matrixMultiply():
     print(result3)
 
 
-matrixMultiply()
+
+def ndArries():
+    a = np.arange(15).reshape(3, 5)
+    print(a)
+    print(a.shape)
+    print(a.ndim)
+    print(a.size)
+    print(type(a))
+
+
+#matrixMultiply()
+#ndArries()
+
+dir()
+
+
+
