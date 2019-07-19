@@ -15,8 +15,17 @@ def closed_form(X, Y, lambda_factor):
         theta - (d + 1, ) NumPy array containing the weights of linear regression. Note that theta[0]
         represents the y-axis intercept of the model and therefore X[0] = 1
     """
-    # YOUR CODE HERE
-    raise NotImplementedError
+    dimension = X.shape[1]
+    the_i = np.eye(dimension)
+    rt1 = np.transpose(X)
+    r1 = np.mat(rt1) * np.mat(X)
+    r2 = lambda_factor*the_i
+    r3 = (r1 + r2).I
+    r4 = np.mat(r3) * np.mat(np.transpose(X))
+    r5 = np.mat(r4) * np.mat(Y).reshape(r4.shape[1], 1)
+    r6 = r5[:, 0]
+    return np.squeeze(np.asarray(r6))
+
 
 ### Functions which are already complete, for you to use ###
 

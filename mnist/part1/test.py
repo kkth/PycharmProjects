@@ -177,6 +177,9 @@ def check_compute_cost_function():
     zeros = np.zeros((k, d))
     temp = 0.2
     lambda_factor = 0.5
+    print(X)
+    print(Y)
+    print(zeros)
     exp_res = 1.9459101490553135
     if check_real(
             ex_name, softmax.compute_cost_function,
@@ -312,5 +315,7 @@ def main():
     except Exception:
         log_exit(traceback.format_exc())
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()
+
+check_compute_cost_function()

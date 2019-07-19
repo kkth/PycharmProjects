@@ -31,8 +31,42 @@ def compute_probabilities(X, theta, temp_parameter):
     Returns:
         H - (k, n) NumPy array, where each entry H[j][i] is the probability that X[i] is labeled as j
     """
-    #YOUR CODE HERE
-    raise NotImplementedError
+    n = X.shape[0]
+    k = theta.shape[0]
+    H = []
+    for ni in range(n):
+        Xi = X[ni, :]
+        exp_dot_array = []
+        c = 0
+
+        #get the c for this x data point
+        for ti in range(k):
+            thetai = theta[ti, :]
+            cur_c = np.dot(np.dot(thetai, Xi), 1 / temp_parameter)
+            exp_dot_array.append(cur_c)
+            if cur_c > c:
+                c = cur_c
+
+        x_array = []
+
+        for ti in range(k):
+            exp_dot_array[ti] = exp_dot_array[ti] - c
+
+        for ti in range(k):
+            x_array.append(np.exp(exp_dot_array[ti]))
+
+        sum = 0
+        for ti in range(k):
+            sum = sum + x_array[ti]
+
+        hn = x_array
+        hn = hn / sum
+        H.append(hn)
+
+    HT = np.transpose(H)
+    Harray = np.asarray(HT)
+    return Harray
+
 
 def compute_cost_function(X, Y, theta, lambda_factor, temp_parameter):
     """
@@ -51,7 +85,32 @@ def compute_cost_function(X, Y, theta, lambda_factor, temp_parameter):
         c - the cost value (scalar)
     """
     #YOUR CODE HERE
-    raise NotImplementedError
+    n = X.shape[0]
+    k = theta.shape[0]
+    d = theta.shape[1]
+
+    #get the first half
+    first_half = 0
+    for i in range(n):
+        tmp = 0
+        for l in range(k):
+            tmp += np.exp((np.dot(theta[l, :], X[i, :]))/temp_parameter)
+        j = Y[i]
+        val = np.log(np.exp(np.dot(theta[j, :], X[i, :])/temp_parameter)/tmp)
+        first_half += val
+    first_half = first_half*(-1)/n
+
+    #get the second half
+    second_half = 0
+    for i in range(k):
+        for j in range(d):
+            second_half += theta[i, j]**2
+    second_half *= lambda_factor
+    second_half /= 2
+
+    return first_half + second_half
+
+
 
 def run_gradient_descent_iteration(X, Y, theta, alpha, lambda_factor, temp_parameter):
     """

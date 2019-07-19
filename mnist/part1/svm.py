@@ -15,7 +15,10 @@ def one_vs_rest_svm(train_x, train_y, test_x):
     Returns:
         pred_test_y - (m,) NumPy array containing the labels (0 or 1) for each test data point
     """
-    raise NotImplementedError
+    clf = LinearSVC(random_state=0, C=0.1)
+    clf.fit(train_x, train_y)
+    ret = clf.predict(test_x)
+    return ret
 
 
 def multi_class_svm(train_x, train_y, test_x):
@@ -29,8 +32,14 @@ def multi_class_svm(train_x, train_y, test_x):
     Returns:
         pred_test_y - (m,) NumPy array containing the labels (int) for each test data point
     """
-    raise NotImplementedError
+    clf = LinearSVC(random_state=0, C=0.1)
+    clf.fit(train_x, train_y)
+    ret = clf.predict(test_x)
+    return ret
 
-
+### You can easily copy the last line of "compute_test_error_linear" function and change the name of the variables.
+### or
+### Hello, implement zero-one loss in the function.
+### You can also import the function from the sklearn lib: from sklearn.metrics import zero_one_loss
 def compute_test_error_svm(test_y, pred_test_y):
-    raise NotImplementedError
+    return 1 - np.mean(test_y == pred_test_y)
