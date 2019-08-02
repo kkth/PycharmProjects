@@ -16,35 +16,34 @@ def closed_form(X, Y, lambda_factor):
         represents the y-axis intercept of the model and therefore X[0] = 1
     """
     the_i = np.eye(X.shapep[1])
-    return (np.transpose(X)*X + lambda_factor*the_i).I*np.transpose(X)*Y
-
+    return (np.transpose(X) * X + lambda_factor * the_i).I * np.transpose(X) * Y
 
 
 train_x = [[0.12776022, 0.19765322],
- [0.59225675, 0.37678803],
- [0.13230964, 0.7247785 ],
- [0.42213388, 0.38857987],
- [0.73405887, 0.32101689],
- [0.17749338, 0.02589688],
- [0.03903776, 0.09311586],
- [0.21799272, 0.19997887],
- [0.33638151, 0.99184474],
- [0.45105624, 0.20921742]]
+           [0.59225675, 0.37678803],
+           [0.13230964, 0.7247785],
+           [0.42213388, 0.38857987],
+           [0.73405887, 0.32101689],
+           [0.17749338, 0.02589688],
+           [0.03903776, 0.09311586],
+           [0.21799272, 0.19997887],
+           [0.33638151, 0.99184474],
+           [0.45105624, 0.20921742]]
 train_y = [0, 0, 1, 0, 1, 1, 0, 0, 1, 1]
 test_x = [[0.22373521, 0.75253547],
-[0.55796528, 0.27457326],
-[0.60261045, 0.2933018 ],
-[0.30765521, 0.43781043],
-[0.17800156, 0.68400566],
-[0.5144091 , 0.99165093],
-[0.08753217, 0.01916129],
-[0.12347731, 0.29519974],
-[0.53449037, 0.33921037],
-[0.78679386, 0.81747222],
-[0.79803498, 0.13772139],
-[0.01215544, 0.00234388],
-[0.26409408, 0.03648458],
-[0.61676343, 0.97747782]]
+          [0.55796528, 0.27457326],
+          [0.60261045, 0.2933018],
+          [0.30765521, 0.43781043],
+          [0.17800156, 0.68400566],
+          [0.5144091, 0.99165093],
+          [0.08753217, 0.01916129],
+          [0.12347731, 0.29519974],
+          [0.53449037, 0.33921037],
+          [0.78679386, 0.81747222],
+          [0.79803498, 0.13772139],
+          [0.01215544, 0.00234388],
+          [0.26409408, 0.03648458],
+          [0.61676343, 0.97747782]]
 
 
 def one_vs_rest_svm(train_x, train_y, test_x):
@@ -64,10 +63,7 @@ def one_vs_rest_svm(train_x, train_y, test_x):
     return ret
 
 
-
-#print(one_vs_rest_svm(train_x,train_y,test_x))
-
-
+# print(one_vs_rest_svm(train_x,train_y,test_x))
 
 
 def compute_probabilities(X, theta, temp_parameter):
@@ -90,7 +86,7 @@ def compute_probabilities(X, theta, temp_parameter):
         exp_dot_array = []
         c = 0
 
-        #get the c for this x data point
+        # get the c for this x data point
         for ti in range(k):
             thetai = theta[ti, :]
             cur_c = np.dot(np.dot(thetai, Xi), 1 / temp_parameter)
@@ -101,7 +97,7 @@ def compute_probabilities(X, theta, temp_parameter):
         x_array = []
 
         for ti in range(k):
-            exp_dot_array[ti] = exp_dot_array[ti]- c
+            exp_dot_array[ti] = exp_dot_array[ti] - c
 
         for ti in range(k):
             x_array.append(np.exp(exp_dot_array[ti]))
@@ -119,14 +115,12 @@ def compute_probabilities(X, theta, temp_parameter):
     return Harray
 
 
-
 X = np.array([[1, 2], [3, 5], [1, 6], [2, 4]])
 theta = np.array([[0, 1], [2, 3]])
 t = 1.2
 print(compute_probabilities(X, theta, t))
 
-
-print(np.log10(1/7))
+print(np.log10(1 / 7))
 
 
 def run_gradient_descent_iteration(X, Y, theta, alpha, lambda_factor, temp_parameter):
@@ -146,15 +140,29 @@ def run_gradient_descent_iteration(X, Y, theta, alpha, lambda_factor, temp_param
     Returns:
         theta - (k, d) NumPy array that is the final value of parameters theta
     """
-    itemp=1./temp_parameter
+    itemp = 1. / temp_parameter
     num_examples = X.shape[0]
     num_labels = theta.shape[0]
     probabilities = compute_probabilities(X, theta, temp_parameter)
     # M[i][j] = 1 if y^(j) = i and 0 otherwise.
-    M = sparse.coo_matrix(([1]*num_examples, (Y,range(num_examples))), shape=(num_labels,num_examples)).toarray()
-    non_regularized_gradient = np.dot(M-probabilities, X)
-    non_regularized_gradient *= -itemp/num_examples
+    M = sparse.coo_matrix(([1] * num_examples, (Y, range(num_examples))), shape=(num_labels, num_examples)).toarray()
+    non_regularized_gradient = np.dot(M - probabilities, X)
+    non_regularized_gradient *= -itemp / num_examples
     return theta - alpha * (non_regularized_gradient + lambda_factor * theta)
 
 
+a = np.arange(0, 20).reshape(4, 5)
+print(a)
+print("a[0:2, 3:5] =", a[0:2, 3:5])
+print("a[0:2] =", a[0:2])
+print("a[0, 1]", a[0, 1])
+print("a[0]", a[0])
+print("a[0:1]", a[0:1])
+print("a[0:2]", a[0:2])
+
+x = np.array([1, 3, 5]).reshape(3, -1)
+y = np.array([2, 4, 5]).reshape(3, -1)
+print(x)
+print(y)
+print(np.multiply(x, y))
 

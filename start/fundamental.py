@@ -77,10 +77,30 @@ def ndArries():
     print(type(a))
 
 
-#matrixMultiply()
-#ndArries()
+# matrixMultiply()
+# ndArries()
 
-dir()
+print("numpy array operation")
+# generate an np array with 24 elements=[0,23]
+a = np.arange(0, 24, 1)
+print("a=", a)
+
+# reshape it to 3*8 2-d array
+b = a.reshape(3, -1)
+print("b=", b)
+# print(a[:3])
+print(b[(0, 2), ])
+
+
+# reshape it to 4*6 2-d array
+c = a.reshape(4, -1)
+print("c=", c)
+print("right corner=", c[0:3, 3:6])
+print("corner lines=", c[[0, 1, 2], [5, 4, 3]])
+print("column=", c[0:3, 2])
+print("column=", c[0:3, ])
+print("column=", c[0:3, :])
+
 
 
 
